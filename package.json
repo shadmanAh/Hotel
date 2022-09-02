@@ -1,0 +1,22 @@
+{
+  "name": "app",
+  "private": "true",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.2.0",
+    "@popperjs/core": "^2.11.6",
+    "@vitejs/plugin-vue": "^3.0.3",
+    "bootstrap": "^5.2.0",
+    "bootstrap-icons": "^1.9.1",
+    "sass": "^1.54.8",
+    "vue": "3.2.33",
+    "vue-router": "4",
+    "vuex": "^4.0.2"
+  },
+  "scripts": {
+    "build:css": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+  },
+  "devDependencies": {
+    "vite": "^3.0.0",
+    "vite-plugin-ruby": "^3.1.0"
+  }
+}
