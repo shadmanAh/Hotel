@@ -1,6 +1,8 @@
 import { createApp } from 'vue/dist/vue.esm-bundler'
 import store from '@/store'
 import ButtonCounter from '../components/ButtonCounter.vue'
+import "trix"
+import "@rails/actiontext"
 
   
 const app = createApp({  

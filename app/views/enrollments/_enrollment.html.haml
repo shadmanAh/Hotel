@@ -1,0 +1,21 @@
+.card
+  .card-header.d-flex.gap-1
+    .bi.bi-person-fill 
+    = link_to enrollment.user.username, user_path(enrollment.user)
+    .bi.bi-clock-fill.ms-4
+    = time_ago_in_words(enrollment.updated_at)
+    .bi.bi-building.ms-4
+    = link_to enrollment.hostel.name, hostel_path(enrollment.hostel)
+
+  .card-body
+    .text-warning.bi.bi-star-fill
+      %b.text-dark
+        = enrollment.rating
+    .bi.bi-chat-fill
+      = enrollment.review
+  - if current_user
+    .card-footer
+      - if policy(enrollment).edit?
+        = link_to 'Edit', edit_enrollment_path(enrollment)
+        \|
+      = link_to 'Back', enrollments_path

@@ -1,0 +1,20 @@
+- content_for :title do
+  Hotel
+  \|
+  New enrollment
+
+.card 
+  .card-header
+    %h1.d-flex
+      .bi.bi-building
+      = link_to @hostel.name, hostel_path(@hostel)
+      -# = @hostel.id
+      -# = current_user.id
+    %hr
+      %h1.d-flex
+        .text-warning.bi.bi-star-fill
+        Add a Review
+  .card-body
+    = render 'form'
+  .card-footer
+    = link_to 'Back', enrollments_path

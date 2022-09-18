@@ -1,0 +1,26 @@
+-# frozen_string_literal: true
+= simple_form_for [@hostel, @room] do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :title
+    = f.label :short_description
+    = f.rich_text_area :short_description
+    %small= f.error :short_description, class: 'text-danger'
+    = f.label :description
+    = f.rich_text_area :description
+    %small= f.error :description, class: 'text-danger'
+    = f.input :price
+    = f.input :capacity
+    = f.input :size
+    = f.input :bed
+    = f.input :book
+    = f.input :check_in
+    = f.input :check_out
+    = f.input :view
+    -# = f.association :hostel
+    -# = f.input :hostel_id, input_html: {value: @room.hostel_id || params[:hostel_id]}, as: :hidden
+    %p
+  .form-actions
+    = f.button :submit

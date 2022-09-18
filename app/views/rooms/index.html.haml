@@ -1,0 +1,43 @@
+%h1 Listing rooms
+
+%table
+  %thead
+    %tr
+      %th Title
+      %th Short-description
+      %th Description
+      %th Price
+      %th Capacity
+      %th Size
+      %th Bed
+      %th Book
+      %th Check-in
+      %th Check-out
+      %th View
+      %th Hostel
+      %th
+      %th
+      %th
+
+  %tbody
+    - @rooms.each do |room|
+      %tr
+        %td= room.title
+        %td= room.short_description
+        %td= room.description
+        %td= room.price
+        %td= room.capacity
+        %td= room.size
+        %td= room.bed
+        %td= room.book
+        %td= room.check_in
+        %td= room.check_out
+        %td= room.view
+        %td= room.hostel
+        %td= link_to 'Show', room
+        %td= link_to 'Edit', edit_room_path(room)
+        %td= link_to 'Destroy', room, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Room', new_room_path

@@ -1,0 +1,17 @@
+- content_for :title do
+  Hotel
+  \|
+  Editing
+  = @enrollment.to_s
+
+.card 
+  .card-header
+    %h1.d-flex
+      .text-warning.bi.bi-star-fill
+      Editing Review
+  .card-body
+    = render 'form'
+  .card-footer
+    = link_to 'Show review', @enrollment
+    \|
+    = link_to 'Back', enrollments_path

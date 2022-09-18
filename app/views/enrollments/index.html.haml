@@ -1,0 +1,73 @@
+- content_for :title do
+  Hotel
+  \|
+  = action_name.humanize
+  enrollments
+%h3
+  .text-center
+    = action_name.humanize
+    enrollments
+    .badge.bg-info 
+      = @enrollments.count
+%p
+
+.d-flex.gap-1
+  = search_form_for @q do |f|
+    .d-flex.gap-1
+      = f.search_field :review_cont, placeholder: 'review', class: 'form-control form-control-sm'
+      = f.search_field :rating_eq, placeholder: 'rating', class: 'form-control form-control-sm'
+      = f.search_field :hostel_name_cont, placeholder: 'hotel name', class: 'form-control form-control-sm'
+      = f.search_field :user_email_cont, placeholder: 'user email', class: 'form-control form-control-sm'
+      -# = f.search_field :sign_in_count_eq, placeholder: 'sing in count'
+      = f.submit 'Search', class: 'btn btn-sm btn-primary'
+  = link_to enrollments_path, class: 'btn btn-sm btn-secondary' do 
+    .bi.bi-arrow-repeat
+%br
+
+.table-responsive
+  %table.table.table-bordered.table-striped.table-sm
+    %thead
+      %tr
+        %th ID
+        %th= sort_link(@q, :user_email)
+        -# .bi.bi-person-circle
+        -#   User
+        %th= sort_link(@q, :created_at) 
+        -# .bi.bi-clock-fill
+        -#   create date
+        %th= sort_link(@q, :hostel_name)
+        -# .bi.bi-building
+        -#   Hotel
+        %th
+          .text-warning.bi.bi-clock-fill
+            %b.text-dark
+              Reviewed on
+        %th= sort_link(@q, :rating)
+        -# .text-warning.bi.bi-star-fill
+        -#   %b.text-dark
+        -#     Rating
+        %th
+          .text-warning.bi.bi-chat-fill
+            %b.text-dark
+              Review
+        %th
+
+    %tbody
+      - @enrollments.each do |enrollment|
+        %tr
+          %td= enrollment.id
+          %td= link_to enrollment.user, user_path(enrollment.user)
+          %td= enrollment.created_at.strftime("%d/%b/%Y, %H:%M")
+          %td= link_to enrollment.hostel.name, hostel_path(enrollment.hostel)
+          %td
+            - if enrollment.created_at != enrollment.updated_at
+              = enrollment.updated_at.strftime("%d/%b/%Y, %H:%M")
+          %td= enrollment.rating
+          %td= enrollment.review
+          %td.d-flex.gap-1
+            = link_to 'See review', enrollment, class: 'btn btn-primary btn-sm'
+            = link_to 'Edit', edit_enrollment_path(enrollment), class: 'btn btn-warning btn-sm'
+            = button_to 'Delete', enrollment, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm'
+
+!= pagy_bootstrap_nav(@pagy)
+%br

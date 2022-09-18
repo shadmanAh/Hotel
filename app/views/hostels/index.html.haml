@@ -1,0 +1,41 @@
+- content_for :title do
+  Hotel
+  \|
+  = action_name.humanize
+  hotels
+
+%h3
+  .text-center
+    = action_name.humanize
+    hotels 
+    .badge.bg-info 
+      = @hostels.count
+%p
+.row 
+  .col-md-2 
+    = search_form_for @ransack_hostels, as: :hostels_search, url: hostels_path do |f|
+      = f.label :hotel_name
+      = f.search_field :name_cont, placeholder: 'name', class: 'form-control form-control-sm'
+      = f.label :address
+      = f.search_field :address_cont, placeholder: 'address', class: 'form-control form-control-sm'
+      = f.label :manager_name
+      = f.search_field :user_email_cont, placeholder: 'manager', class: 'form-control form-control-sm'
+      .row
+      = sort_link(@ransack_hostels, :average_rating, "Top Rated")
+      .row
+      = sort_link(@ransack_hostels, :enrollments_count, "Most Popular")
+      .row
+      = sort_link(@ransack_hostels, :created_at, "Fresh")
+      .row
+      = f.submit 'Search', class: 'btn btn-primary my-1'
+    = link_to hostels_path, class: 'btn btn-sm btn-secondary' do 
+      .bi.bi-arrow-repeat
+  .col-md-10
+    .row.row-cols-1.row-cols-md-3.g-4
+      - @hostels.each do |hostel|
+        = render 'hostels/hostel', hostel: hostel
+    %p
+    -# != pagy_nav(@pagy)
+    != pagy_bootstrap_nav(@pagy)
+
+%br

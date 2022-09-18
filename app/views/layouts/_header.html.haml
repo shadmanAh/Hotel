@@ -1,0 +1,119 @@
+%nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+  .container-fluid
+    %a.navbar-brand.ms-5{href: "/"} Hotel
+    %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", type: "button"}
+      %span.navbar-toggler-icon
+    #navbarSupportedContent.collapse.navbar-collapse
+      - if current_user
+        %ul.navbar-nav.me-auto.mb-2.mb-lg-0
+          %li.nav-item{class: "#{'active font-weight-bold' if current_page?(root_path)}"}
+            = link_to root_path, class: 'nav-link' do
+              .bi.bi-house-door-fill
+                Home
+          %li.nav-item{class: "#{'active font-weight-bold' if current_page?(hostels_path)}"}
+            = link_to hostels_path, class: 'nav-link' do
+              .bi.bi-building
+                Hotels
+
+          -# %li.nav-item{class: "#{'active font-weight-bold' if current_page?(new_hostel_path)}"}
+          -#   = link_to new_hostel_path, class: 'nav-link' do
+          -#     .bi.bi-plus-lg
+          -#       New Hotel
+          -# %li.nav-item{class: "#{'active font-weight-bold' if current_page?(users_path)}"}
+          -#   = link_to users_path, class: 'nav-link' do
+          -#     .bi.bi-people-fill
+          -#       Users
+          -# %li.nav-item{class: "#{'active font-weight-bold' if current_page?(enrollments_path)}"}
+          -#   = link_to enrollments_path, class: 'nav-link' do
+          -#     .bi.bi-unlock-fill
+          -#       Enrollments
+
+          - if current_user.has_role?(:customer)
+            %li.nav-item.dropdown
+              %a#customerDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", href: "#", role: "button"}
+                Reserved Room
+              %ul.dropdown-menu{"aria-labelledby" => "customerDropdown"}
+                = link_to hostels_path, class: "dropdown-item" do 
+                  .bi.bi-plus-lg
+                    %b Reserved Room
+          - if current_user.has_role?(:manager)
+            %li.nav-item.dropdown
+              %a#managerDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", href: "#", role: "button"}
+                Manager
+              %ul.dropdown-menu{"aria-labelledby" => "managerDropdown"}
+                = link_to new_hostel_path, class: "dropdown-item" do 
+                  .bi.bi-plus-lg
+                    %b New Hotel
+                = link_to created_hostels_path, class: "dropdown-item d-flex gap-1" do 
+                  .bi.bi-building
+                    %b Created Hotels
+                  .badge.bg-danger 
+                    = current_user.hostels_count
+                = link_to hostels_path, class: "dropdown-item" do 
+                  .bi.bi-person-fill
+                    %b My Customer
+                
+          
+          - if current_user.has_role?(:admin)
+            %li.nav-item.dropdown
+              %a#adminDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", href: "#", role: "button"}
+                Admin
+              %ul.dropdown-menu{"aria-labelledby" => "adminDropdown"}
+                = link_to unapproved_hostels_path, class: "dropdown-item d-flex gap-1" do 
+                  .bi.bi-building
+                    %b Unapproved hotels
+                  .badge.bg-danger
+                    = Hostel.unapproved.count
+                = link_to users_path, class: "dropdown-item d-flex gap-1" do 
+                  .bi.bi-people-fill
+                    %b Users
+                  .badge.bg-danger
+                    = User.count
+                = link_to enrollments_path, method: :delete, class: "dropdown-item d-flex gap-1" do 
+                  .bi.bi-unlock-fill
+                    %b Enrollments
+                  .badge.bg-danger
+                    = Enrollment.count
+                = link_to activity_path, method: :delete, class: "dropdown-item" do 
+                  .bi.bi-bell-fill
+                    %b Activity
+          
+
+
+        .d-flex
+          = search_form_for @ransack_hostels, as: :hostels_search, url: hostels_path do |f| 
+            .input-group
+              = f.search_field :name_cont, placeholder: "Find a Hotel", class: 'form-control'
+              %span.input-group-append
+                %button.btn.btn-primary{type: "submit"}
+                  %span.bi.bi-search
+
+
+        -# .d-flex
+        -#   = form_tag(hostels_path, method: :get) do 
+        -#     .input-group
+        -#       = text_field_tag :name, params[:name], autocomplete: 'off', placeholder: "Search", class: 'form-control'
+        -#       %span.input-group-append
+        -#         %button.btn.btn-primary{type: "submit"}
+        -#           %span.bi.bi-search
+
+        %ul.navbar-nav.me-5.mb-2.mb-lg-0
+          -# %li.nav-item{class: "#{'active font-weight-bold' if current_page?(activity_path)}"}
+          -#   = link_to activity_path, class: 'nav-link' do
+          -#     .bi.bi-bell-fill
+          -#       Activity
+          %li.nav-item.dropdown
+            %a#navbarDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", href: "#", role: "button"}
+              %b= current_user.email
+            %ul.dropdown-menu{"aria-labelledby" => "navbarDropdown"}
+              = link_to edit_user_registration_path, class: "dropdown-item" do 
+                .bi.bi-gear-fill
+                  %b Account settings
+              = link_to destroy_user_session_path, method: :delete, class: "dropdown-item" do 
+                .bi.bi-box-arrow-right
+                  %b Sign out
+  
+      - else
+        %ul.navbar-nav
+          %li.nav-item= link_to 'Sign Up', new_user_registration_path, class: 'nav-link'
+          %li.nav-item= link_to 'Log In', new_user_session_path, class: 'nav-link'

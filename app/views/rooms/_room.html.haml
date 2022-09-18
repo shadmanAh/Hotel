@@ -1,0 +1,50 @@
+.p-5.mb-4.bg-light.rounded-3
+  .container-fluid.py-5
+    .fw-bold
+      = room.description
+
+.card 
+  .card-header.d-flex
+    .bi.bi-door-open-fill
+    = link_to room.title, hostel_room_path(@hostel, room)
+  .card-body 
+    = room.short_description
+  .card-footer.d-flex
+    .col-md-4
+      = number_to_currency(room.price)
+    .col-md-4
+      .bi.bi-people-fill.text-center
+        = room.capacity
+    .col-md-4
+      .text-end
+        = 'size:'
+        = room.size
+        = 'm'
+    
+  .card-footer.d-flex
+    .col-md-4
+      = 'beds:'
+      = room.bed
+    
+    .col-md-4
+      .text-success.text-center.bi.bi-image-alt
+        %b.text-dark
+          = room.view
+    .col-md-4
+      .text-end.bi.bi-building
+        = room.hostel.name
+  .card-footer.d-flex 
+    - if room.book && (DateTime.current.to_date < room.check_out)
+      .badge.bg-danger
+        = 'booked: from'
+        = room.check_in.strftime('%d-%b-%Y')
+        = 'to'
+        = room.check_out.strftime('%d-%b-%Y')
+    - else
+      = render 'rooms/book', room: room
+  - if policy(room).edit? && policy(room).show?
+    .card-footer.d-flex.gap-1
+      = link_to 'Edit', edit_hostel_room_path(@hostel, room), class: 'btn btn-sm btn-warning'
+      -# = button_to 'Destroy', [@hostel, @room], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger'
+      = button_to 'Destroy', [@hostel, @room], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger'
+

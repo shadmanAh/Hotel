@@ -1,0 +1,66 @@
+.col
+  .card
+    .card-header
+      .bi.bi-building
+        = link_to hostel.name, hostel_path(hostel)
+    - if hostel.avatar.attached?
+      .card-img-top 
+        = image_tag hostel.avatar, height: "250px", width: "100%"; 
+
+    .card-body 
+      = hostel.description
+    .card-footer 
+      .bi.bi-geo-alt-fill
+        = hostel.address
+    .card-footer.d-flex
+      %b
+        = pluralize(hostel.rooms_count, 'room')
+        -# Rooms:
+        -# = hostel.rooms_count
+    .card-footer.d-flex
+      .col-md-6.d-flex
+        .text-warning.bi.bi-star-fill
+          %b.text-dark
+            = hostel.average_rating
+        -# Enrollments count: 
+        -# = hostel.enrollments.count
+        ( 
+        .bi.bi-person-fill
+        = hostel.enrollments_count
+        )
+      .col-md-6
+        .text-end 
+          = enrollment_button(hostel)
+    .card-footer.d-flex
+      .col-md-6
+        .bi.bi-person-circle
+          = link_to hostel.user.username, user_path(hostel.user) 
+      .col-md-6
+        .text-end
+          .bi.bi-clock-fill
+            = hostel.created_at.strftime('%d-%b-%Y')
+    - if current_user
+      - if policy(hostel).edit?
+        .card-footer.d-flex.gap-1
+          - if policy(hostel).owner?
+            = link_to 'Add room', new_hostel_room_path(hostel, @room), class: 'btn btn-sm btn-primary'
+          -# - if policy(hostel).edit?
+          = link_to 'Edit', edit_hostel_path(hostel), class: 'btn btn-sm btn-warning'
+          -# - if policy(hostel).destroy?
+          = button_to 'Destroy', hostel, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger'
+        - if policy(hostel).edit?
+          .card-footer
+            - if hostel.published?
+              .badge.bg-success published 
+            - else 
+              .badge.bg-danger unpublished
+            - if hostel.approved?
+              .badge.bg-success approved 
+            - else 
+              .badge.bg-danger unapproved
+        - if policy(hostel).approve?
+          .card-footer 
+            - if hostel.approved?
+              = link_to 'unapprove', unapprove_hostel_path(hostel), method: :patch, class: 'btn btn-sm btn-danger'
+            - else 
+              = link_to 'approve', approve_hostel_path(hostel), method: :patch, class: 'btn btn-sm btn-success'

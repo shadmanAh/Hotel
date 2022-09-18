@@ -1,2 +1,6 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+@import 'actiontext.css';
+
+.form-control.is-invalid{ background-image: none; }
+.form-control.is-valid{ background-image: none; }

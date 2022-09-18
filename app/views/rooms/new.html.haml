@@ -1,0 +1,23 @@
+- content_for :title do
+  Hotel
+  \/
+  Hotel
+  = @hostel.name
+  \/
+  New room 
+
+= link_to 'Hotels', hostels_path
+\/
+= link_to @hostel.name, hostel_path(@hostel)
+\/
+New room
+%p
+.card 
+  .card-header
+    %h1.d-flex
+      .bi.bi-check2-square
+      New room
+  .card-body
+    = render 'form'
+
+= link_to 'Back', hostel_path(@hostel)

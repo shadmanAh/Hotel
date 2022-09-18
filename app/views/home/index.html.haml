@@ -1,8 +1,108 @@
-%h1 Home#index
-%p Find me in app/views/home/index.html.erb
+- content_for :title do
+  Hotel
+  \|
+  Online reserve hotel
+
+
+.p-5.mb-4.bg-light.rounded-3
+  .container-fluid.py-5
+    .display-5.fw-bold
+      Where do you want to go today?
+
+    .p-4 
+
+    - if current_user
+      .d-flex
+        = search_form_for @ransack_hostels, as: :hostels_search, url: hostels_path do |f| 
+          .input-group
+            = f.search_field :name_cont, placeholder: "Find a Hotel", class: 'form-control'
+            %span.input-group-append
+              %button.btn.btn-primary{type: "submit"}
+                %span.bi.bi-search
+
+.card-group 
+  .card.card-body 
+    %h1
+      .bi.bi-building
+    = Hostel.count 
+    Hotels
+    .row 
+    Explore a variety of fresh topics
+  .card.card-body 
+    %h1
+      .bi.bi-building
+    = Hostel.distinct.count(:user_id)
+    Hotels
+    .row 
+    Explore a variety of fresh topics
+  .card.card-body 
+    %h1
+      .bi.bi-people-fill
+    = User.count 
+    Costumer
+    .row 
+    Explore a variety of fresh topics
+  .card.card-body 
+    %h1
+      .bi.bi-building
+    Hotels
+    .row 
+    Explore a variety of fresh topics
+
+
+%hr 
+%h2.d-flex.gap-2
+  .bi.bi-graph-up-arrow
+  Poupular hotels
+.row.row-cols-1.row-cols-md-3.g-4
+  - @popular.each do |hostel|
+    = render 'hostels/hostel', hostel: hostel
+%p
+.text-end 
+  = link_to 'More popular hotels', hostels_path(hostels_search: {s: 'enrollments_count desc'})
+%hr 
+%h2.d-flex.gap-2
+  .bi.bi-star
+  Top rated hotels
+.row.row-cols-1.row-cols-md-3.g-4
+  - @top_rated.each do |hostel|
+    = render 'hostels/hostel', hostel: hostel
+%p
+.text-end 
+  = link_to 'Best rated hotels', hostels_path(hostels_search: {s: 'average_rating desc'})
+%hr 
+%h2.d-flex.gap-2
+  .bi.bi-clock
+  Latest hotels
+.row.row-cols-1.row-cols-md-3.g-4
+  - @latest.each do |hostel|
+    = render 'hostels/hostel', hostel: hostel
+%p
+.text-end 
+  = link_to 'Most new hotels', hostels_path(hostels_search: {s: 'created_at desc'})
+%hr 
+%h2.d-flex.gap-2
+  .bi.bi-chat-right-dots
+  What our costumer have to say
+%p
+.row.row-cols-1.row-cols-md-3.g-4
+  - @latest_good_reviews.each do |enrollment|
+    .gap-1
+      = render 'enrollments/enrollment', enrollment: enrollment
+%hr
+
+
+
+
+%br
+
 #app
   %p {{ course }}
   %button-counter
 .bi.bi-flag
 = link_to root_path do
   .bi.bi-house-door-fill
+
+= link_to hostels_path, class: 'btn btn-success' do
+  .bi.bi-h-circle-fill
+    Hotel

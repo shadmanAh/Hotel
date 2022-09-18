@@ -1,0 +1,14 @@
+- content_for :title do
+  Hotel
+  \|
+  New hotel
+
+.card 
+  .card-header
+    %h1.d-flex
+      .bi.bi-building
+      New hotel
+  .card-body
+    = render 'form'
+
+= link_to 'Back', hostels_path

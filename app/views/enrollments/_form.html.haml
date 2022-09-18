@@ -1,0 +1,16 @@
+-# frozen_string_literal: true
+= simple_form_for(@enrollment) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :hostel_id, input_html: {value: @enrollment.hostel_id || params[:hostel_id]}, as: :hidden
+    = f.input :user_id, input_html: {value: current_user.id}, as: :hidden
+    = f.input :rating, collection: 1..5, as: :radio_buttons
+    = f.input :review
+    
+
+  -# = params.inspect
+  %p
+  .form-actions
+    = f.button :submit

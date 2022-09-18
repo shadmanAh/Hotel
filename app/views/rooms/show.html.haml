@@ -1,0 +1,36 @@
+- content_for :title do
+  Hotel
+  \/
+  Hotel
+  = @hostel.name
+  \/
+  Room 
+  = @room.title
+
+= link_to 'Hotels', hostels_path
+\/
+= link_to @room.hostel.name, hostel_path(@room.hostel)
+\/
+= @room.title
+%p
+
+.row 
+  .col-lg-8
+    = render 'rooms/room', room: @room
+    %p 
+  .col-lg-4 
+    %ul.list-group
+      %li.list-group-item
+        %h3
+          .bi.bi-building 
+            = link_to hostel_path(@room.hostel) do 
+              = @room.hostel.name
+      - @rooms.each do |room|
+        - if @room.present? && room == @room
+          %li.list-group-item.list-group-item-success
+            = render 'rooms/room_preview', room: room
+        - else 
+          %li.list-group-item
+            = render 'rooms/room_preview', room: room
+           
+%p

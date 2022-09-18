@@ -1,0 +1,43 @@
+- content_for :title do
+  Hotel
+  \|
+  = @hostel.name
+
+= link_to 'Hotels', hostels_path
+\/
+= @hostel.name
+
+.row 
+  .col-lg-8.order-1.order-lg-1
+    .p-5.mb-4.bg-light.rounded-3
+      .container-fluid.py-2
+        %h2
+          .bi.bi-building
+            = @hostel.name
+            %p
+            - if @hostel.avatar.attached?
+              = image_tag @hostel.avatar, width: "100%";
+        .p-3 
+        .bi.bi-clock-fill 
+          = @hostel.updated_at.strftime("%m/%Y")
+        .row 
+        .bi.bi-geo-alt-fill
+          = @hostel.address
+        .p-3 
+        = @hostel.description
+    
+    - @rooms.each do |room|
+      = render 'rooms/room_hotel', room: room
+      %p
+    %h4
+      .bi.bi-chat-fill
+        = pluralize(@enrollment_with_reviews.count, 'review')
+        -# Reviews: 
+        -# = @enrollment_with_reviews.count
+    -# - @enrollment_with_reviews.each do |enrollment|
+    -#   = render 'enrollments/enrollment', enrollment: enrollment
+    
+  .col-lg-4.order-0.order-lg-1
+    .sticky-top
+      = render 'hostels/hostel', hostel: @hostel
+    %p

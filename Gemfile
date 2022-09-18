@@ -23,3 +23,14 @@ end
 gem "haml-rails", "~> 2.0"
 gem "font-awesome-sass", "~> 6.2.0"
 gem 'simple_form'
+gem 'faker'
+gem 'devise'
+gem 'friendly_id', '~> 5.4.0'
+gem 'ransack'
+gem 'public_activity'
+gem "rolify"
+gem "pundit", "~> 2.2"
+gem 'pagy'
+gem 'rails-erd', group: :development
+gem 'active_storage_validations'
+gem "image_processing"

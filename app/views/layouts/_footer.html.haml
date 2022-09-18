@@ -1,0 +1,22 @@
+%hr
+%footer
+	.container 
+		.row.my-5
+			.col-md-4.d-grid.gap-3
+				Copyright 
+				&copy;
+				= Time.now.year 
+				Hotels in everywhere 
+				.row 
+				.bi.bi-envelope-fill
+					= mail_to 'shadman061@gmail.com'
+				.row 
+			.col-md-4.d-grid.gap-3 
+				Privacy policy 
+				.row 
+				Location and Rooms 
+			.col-md-4.d-grid.gap-3 
+				About us 
+				.row 
+				= link_to 'Add your Hotel', new_hostel_path 
+%br  

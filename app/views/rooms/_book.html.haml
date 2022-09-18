@@ -1,0 +1,26 @@
+-# frozen_string_literal: true
+= simple_form_for [@hostel, room] do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :title, input_html: {value: room.title || params[:title]}, as: :hidden
+    -# = f.label :short_description
+    -# = f.rich_text_area :short_description, input_html: {value: room.short_description || params[:short_description]}, as: :hidden
+    -# %small= f.error :short_description, class: 'text-danger'
+    -# = f.label :description
+    -# = f.rich_text_area :description, input_html: {value: room.title || params[:description]}, as: :hidden
+    -# %small= f.error :description, class: 'text-danger'
+    = f.input :price, input_html: {value: room.price || params[:price]}, as: :hidden
+    = f.input :capacity, input_html: {value: room.capacity || params[:capacity]}, as: :hidden
+    = f.input :size, input_html: {value: room.size || params[:size]}, as: :hidden
+    = f.input :bed, input_html: {value: room.bed || params[:bed]}, as: :hidden
+    = f.input :check_in
+    = f.input :check_out
+    = f.input :book
+    = f.input :view, input_html: {value: room.view || params[:view]}, as: :hidden
+    -# = f.association :hostel
+    -# = f.input :hostel_id, input_html: {value: @room.hostel_id || params[:hostel_id]}, as: :hidden
+    %p
+  .form-actions
+    = f.submit "Book", class: "btn btn-success"

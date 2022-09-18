@@ -1,0 +1,25 @@
+-# frozen_string_literal: true
+= simple_form_for(@hostel) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :name
+    %p
+    = f.file_field :avatar
+    %small= f.error :avatar, class: 'text-danger'
+    %p
+    .row 
+    - if @hostel.avatar.attached?
+      = image_tag @hostel.avatar, width: "200px";
+      = @hostel.avatar.filename
+    %p
+    = f.input :address
+    = f.label :description
+    = f.rich_text_area :description
+    = f.input :published
+    %small= f.error :description, class: 'text-danger'
+
+  %p
+  .form-actions
+    = f.button :submit
