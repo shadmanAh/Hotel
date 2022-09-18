@@ -4,9 +4,9 @@
   Online reserve hotel
 
 
-.p-5.mb-4.bg-light.rounded-3
-  .container-fluid.py-5
-    .display-5.fw-bold
+.p-5.mb-4.bg-light.rounded-3.bg-home
+  .container-fluid.py-5.bg-text
+    .display-5.fw-bold.text-light
       Where do you want to go today?
 
     .p-4 
@@ -27,28 +27,21 @@
     = Hostel.count 
     Hotels
     .row 
-    Explore a variety of fresh topics
+    Explore a variety of hotels
   .card.card-body 
     %h1
       .bi.bi-building
     = Hostel.distinct.count(:user_id)
     Hotels
     .row 
-    Explore a variety of fresh topics
+    Their management is with you
   .card.card-body 
     %h1
       .bi.bi-people-fill
     = User.count 
     Costumer
     .row 
-    Explore a variety of fresh topics
-  .card.card-body 
-    %h1
-      .bi.bi-building
-    Hotels
-    .row 
-    Explore a variety of fresh topics
-
+    Number of customers of our website
 
 %hr 
 %h2.d-flex.gap-2
